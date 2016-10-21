@@ -17,4 +17,8 @@ class Tag < ActiveRecord::Base
 
   validates :name, presence: true
   validates :name, uniqueness: true
+
+  def self.list
+    self.all.map(&:name)
+  end
 end
