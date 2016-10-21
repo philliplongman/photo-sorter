@@ -17,3 +17,4 @@
 .byebug_history
 
 db/seeds.rb
+photo_library/*
