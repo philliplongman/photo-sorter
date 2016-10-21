@@ -14,6 +14,7 @@ gem "slim"
 gem "annotate"
 gem "responders"
 gem "autoprefixer-rails"
+gem "simple_form"
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> anywhere in the code.
@@ -21,6 +22,7 @@ group :development do
   gem 'listen', '~> 3.0.5'
 
   gem "better_errors"
+  gem "binding_of_caller"
   gem "meta_request"
   gem "bullet"
 end
