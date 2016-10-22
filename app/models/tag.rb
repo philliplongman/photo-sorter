@@ -6,6 +6,7 @@
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  group_id   :integer
 #
 # Indexes
 #
@@ -13,6 +14,7 @@
 #
 
 class Tag < ActiveRecord::Base
+  belongs_to :group, class_name: TagGroup, foreign_key: :group_id
   has_and_belongs_to_many :photos
 
   validates :name, presence: true
