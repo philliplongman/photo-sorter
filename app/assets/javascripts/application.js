@@ -25,11 +25,15 @@ $(function(){
   });
 
   $("img").click(function(e){
-    $target = $(e.target);
-    if ($target.css("max-width") == "100%") {
-      $target.css("max-width", "none");
+    var $target = $(e.target);
+    var maxHeight = $target.css("max-height");
+    var maxWidth = $target.css("max-width");
+
+    if (maxHeight != "none" && maxWidth != "none") {
+      $target.css({ "max-width": "none", "max-height": "none" });
     } else {
-      $target.css("max-width", "100%");
+      var windowHeight = $(window).height();
+      $target.css({ "max-width": "100%", "max-height": windowHeight });
     }
   });
 
