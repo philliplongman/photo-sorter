@@ -1,1 +1,17 @@
-= image_tag @photo.asset_path
+.photo-container.columns
+  = image_tag @photo.asset_path, class: 'photo'
+
+.sidebar.shrink.columns
+  h6= @photo.filename
+  
+  = simple_form_for @photo do |f|
+    = simple_fields_for :tag_ids do |t|
+      
+      - @tag_groups.each do |group|
+          .tag-group class=group.name
+            - group.tags.each do |tag|
+              = t.input tag.name, as: :boolean, 
+                wrapper_html: { class: "button hollow" }
+    
+    = f.button :submit, "Tag Photo", class: "submit full-width"
+    = link_to "Undo", nil, class: "button secondary full-width"

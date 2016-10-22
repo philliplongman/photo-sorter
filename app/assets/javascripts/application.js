@@ -16,3 +16,12 @@
 //= require_tree .
 
 $(function(){ $(document).foundation(); });
+
+
+$(function(){
+
+  $("div.input.button label").click(function(e){
+    $(e.target).parent("div").toggleClass("hollow")
+  });
+
+});

@@ -1,0 +1,64 @@
+$sidebar-background: #959daa;
+
+.photo-container {
+  height: 100vh;
+
+  img {
+    overflow: scroll;
+  }
+}
+
+.sidebar {
+  background: $sidebar-background;
+  color: $white;
+  height: 100vh;
+  overflow-wrap: break-word;
+  overflow-y: scroll;
+
+  h6 {
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+
+  input[type="checkbox"] {
+    -webkit-appearance: none;
+  }
+
+  label {
+    height: 100%;
+    padding: 7px;
+    width: 100%;
+  }
+
+  div.button {
+    margin: 7px;
+    padding: 0;
+    width: 110px;
+  }
+
+  div.button label {
+    color: inherit;
+    margin: 0;
+  }
+
+  .tag-group {
+    @extend .clearfix;
+    background: darken($sidebar-background, 3);
+    margin-bottom: 15px;
+    padding: 5px;
+    width: 258px;
+  }
+
+  .tag-group .column{
+    padding: 5px;
+  }
+
+  .submit {
+    border-color: darken($sidebar-background, 5);
+    margin-top: 15px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+}
