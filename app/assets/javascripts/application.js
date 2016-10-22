@@ -21,7 +21,16 @@ $(function(){ $(document).foundation(); });
 $(function(){
 
   $("div.input.button label").click(function(e){
-    $(e.target).parent("div").toggleClass("hollow")
+    $(e.target).parent("div").toggleClass("hollow");
+  });
+
+  $("img").click(function(e){
+    $target = $(e.target);
+    if ($target.css("max-width") == "100%") {
+      $target.css("max-width", "none");
+    } else {
+      $target.css("max-width", "100%");
+    }
   });
 
 });
