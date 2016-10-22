@@ -10,7 +10,7 @@
       - @tag_groups.each do |group|
           .tag-group class=group.name
             - group.tags.each do |tag|
-              = t.input tag.name, as: :boolean, 
+              = t.input tag.id, label: tag.name, as: :boolean, 
                 wrapper_html: { class: "button hollow" }
     
     = f.button :submit, "Tag Photo", class: "submit full-width"
