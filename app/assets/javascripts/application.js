@@ -20,6 +20,8 @@ $(function(){ $(document).foundation(); });
 
 $(function(){
 
+  $('input[type="checkbox"]:checked').parents(".button").toggleClass("hollow")
+
   $("div.input.button label").click(function(e){
     $(e.target).parent("div").toggleClass("hollow");
   });

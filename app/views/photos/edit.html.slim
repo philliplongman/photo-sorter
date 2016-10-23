@@ -1,23 +1,26 @@
 .main.column
   .photo-container
-    = image_tag @photo.asset_path, id: 'photo'
+    - if @photo
+      = image_tag @photo.asset_path, id: 'photo'
 
 .sidebar.shrink.column
-  h6= @photo.filename
-  
-  .slider data-end="200" data-initial-start="100" data-slider="" 
-    span.slider-handle data-slider-handle="" role="slider" tabindex="1" 
-    span.slider-fill data-slider-fill="" 
-    input type="hidden"
+  - if @photo
+    h6= @photo.filename
+
+    .slider data-end="200" data-initial-start="100" data-slider="" 
+      span.slider-handle data-slider-handle="" role="slider" tabindex="1" 
+      span.slider-fill data-slider-fill="" 
+      input type="hidden"
+            
+    = simple_form_for @photo do |f|
+      = simple_fields_for :tag_ids do |t|
+        
+        - @tag_groups.each do |group|
+            .tag-group class=group.name
+              - group.tags.each do |tag|
+                = t.input tag.id, label: tag.name, as: :boolean, 
+                  wrapper_html: { class: "button hollow" },
+                  input_html: { checked: @photo.tag_ids.include?(tag.id) }
       
-  = simple_form_for @photo do |f|
-    = simple_fields_for :tag_ids do |t|
-      
-      - @tag_groups.each do |group|
-          .tag-group class=group.name
-            - group.tags.each do |tag|
-              = t.input tag.id, label: tag.name, as: :boolean, 
-                wrapper_html: { class: "button hollow" }
-    
-    = f.button :submit, "Tag Photo", class: "submit full-width"
-    = link_to "Undo", nil, class: "button secondary full-width"
+      = f.button :submit, "Tag Photo", class: "submit full-width"
+      = link_to "Undo", undo_photos_path, class: "button secondary full-width"
