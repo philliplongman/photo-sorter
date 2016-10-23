@@ -24,17 +24,42 @@ $(function(){
     $(e.target).parent("div").toggleClass("hollow");
   });
 
-  $("#photo").click(function(e){
-    var $target = $(e.target);
-    var maxHeight = $target.css("max-height");
-    var maxWidth = $target.css("max-width");
+  // $("#photo").click(function(e){
+  //   var $target = $(e.target);
+  //   var maxHeight = $target.css("max-height");
+  //   var maxWidth = $target.css("max-width");
+  //
+  //   if (maxHeight != "none" && maxWidth != "none") {
+  //     $target.css({ "max-width": "none", "max-height": "none" });
+  //   } else {
+  //     var windowHeight = $(window).height();
+  //     $target.css({ "max-width": "100%", "max-height": windowHeight });
+  //   }
+  // });
 
-    if (maxHeight != "none" && maxWidth != "none") {
-      $target.css({ "max-width": "none", "max-height": "none" });
-    } else {
-      var windowHeight = $(window).height();
-      $target.css({ "max-width": "100%", "max-height": windowHeight });
-    }
+
+  var photo = document.getElementById("photo");
+  var photoHeight = photo.naturalHeight;
+  var photoWidth = photo.naturalWidth;
+  var $container = $(".photo-container");
+  var containerHeight = $container.height();
+  var containerWidth = $container.width();
+
+  var $slider = $(".slider")
+  var options = {
+    "data-start":         containerWidth,
+    "data-end":           photoWidth,
+    "data-initial-start": containerWidth
+  }
+  if (photoHeight < containerHeight && photoWidth < containerWidth) {
+    options["data-disabled"] = true
+  }
+  var slider = new Foundation.Slider($slider, options);
+
+
+  $(".slider").on("moved.zf.slider", function(){
+    var newWidth = $(".slider input").val();
+    $("#photo").width(newWidth)
   });
 
 });

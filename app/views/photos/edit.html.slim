@@ -5,6 +5,11 @@
 .sidebar.shrink.column
   h6= @photo.filename
   
+  .slider data-end="200" data-initial-start="100" data-slider="" 
+    span.slider-handle data-slider-handle="" role="slider" tabindex="1" 
+    span.slider-fill data-slider-fill="" 
+    input type="hidden"
+      
   = simple_form_for @photo do |f|
     = simple_fields_for :tag_ids do |t|
       
