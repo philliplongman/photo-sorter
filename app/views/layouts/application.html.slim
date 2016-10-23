@@ -11,5 +11,12 @@ html lang="en"
     = csrf_meta_tag
 
   body
-
-    == yield
+    
+    - flash.each do |key, value|
+      .callout class=key data-closable=""
+        = value
+        button.close-button aria-label="Dismiss alert" data-close="" type="button" 
+          span aria-hidden="true"  &times;
+        
+    .row
+      == yield

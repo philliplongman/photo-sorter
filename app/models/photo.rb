@@ -22,6 +22,10 @@ class Photo < ActiveRecord::Base
   validates :path, uniqueness: true
 
   def asset_path
-    "photo_library/" + File.basename(path)
+    "photo_library/#{filename}"
+  end
+
+  def filename
+    File.basename(path)
   end
 end

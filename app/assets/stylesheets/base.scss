@@ -1,0 +1,82 @@
+$sidebar-background: $medium-gray;
+
+.main {
+  padding: 0 !important;
+}
+
+.photo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 100vh;
+  min-height: 95vh;
+  overflow: scroll;
+
+  #photo {
+    max-height: 100vh;
+    max-width: 100%;
+  }
+}
+
+.sidebar {
+  background: $sidebar-background;
+  color: darken($sidebar-background, 48);
+  height: 100vh;
+  overflow-wrap: break-word;
+  overflow-y: scroll;
+  z-index: 2;
+
+  h6 {
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+
+  input[type="checkbox"] {
+    -webkit-appearance: none;
+  }
+
+  label {
+    height: 100%;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 7px;
+    padding-right: 12px;
+    width: 100%;
+  }
+
+  div.button {
+    margin: 7px;
+    padding: 0;
+    width: 110px;
+    border-radius: 25px;
+  }
+
+  div.button label {
+    color: inherit;
+    margin: 0;
+  }
+
+  .tag-group {
+    @extend .clearfix;
+    background: lighten($sidebar-background, 3);
+    border-color: darken($sidebar-background, 4);
+    border-width: thin;
+    border-style: solid;
+    margin-bottom: 15px;
+    padding: 5px;
+    width: 260px;
+  }
+
+  .tag-group .column{
+    padding: 5px;
+  }
+
+  .submit {
+    border-color: darken($sidebar-background, 10);
+    margin-top: 15px;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+}
