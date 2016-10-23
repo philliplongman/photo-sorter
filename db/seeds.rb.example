@@ -1,0 +1,22 @@
+family = TagGroup.find_or_create_by name: "family"
+Tag.find_or_create_by! name: "kids", group: family
+Tag.find_or_create_by! name: "vacation", group: family
+Tag.find_or_create_by! name: "wedding", group: family
+
+work = TagGroup.find_or_create_by name: "work"
+Tag.find_or_create_by! name: "screenshots", group: work
+Tag.find_or_create_by! name: "wireframes", group: work
+Tag.find_or_create_by! name: "inspiration", group: work
+
+misc = TagGroup.find_or_create_by name: "misc"
+Tag.find_or_create_by! name: "misfiled", group: misc
+Tag.find_or_create_by! name: "other", group: misc
+Tag.find_or_create_by! name: "flag", group: misc
+Tag.find_or_create_by! name: "delete", group: misc
+
+
+files = Dir[Rails.root.join("app/assets/images/photo_library/*")]
+
+files.each do |file|
+  Photo.find_or_create_by! path: file
+end
