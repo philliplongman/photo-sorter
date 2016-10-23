@@ -1,7 +1,8 @@
-.photo-container.columns
-  = image_tag @photo.asset_path, class: 'photo'
+.main.column
+  .photo-container
+    = image_tag @photo.asset_path, id: 'photo'
 
-.sidebar.shrink.columns
+.sidebar.shrink.column
   h6= @photo.filename
   
   = simple_form_for @photo do |f|

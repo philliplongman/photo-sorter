@@ -24,7 +24,7 @@ $(function(){
     $(e.target).parent("div").toggleClass("hollow");
   });
 
-  $("img").click(function(e){
+  $("#photo").click(function(e){
     var $target = $(e.target);
     var maxHeight = $target.css("max-height");
     var maxWidth = $target.css("max-width");
