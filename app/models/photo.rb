@@ -3,7 +3,7 @@
 # Table name: photos
 #
 #  id         :integer          not null, primary key
-#  path       :string           not null
+#  path       :text             not null
 #  tagged_at  :datetime
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
