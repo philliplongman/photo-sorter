@@ -15,8 +15,65 @@ Tag.find_or_create_by! name: "flag", group: misc
 Tag.find_or_create_by! name: "delete", group: misc
 
 
+
+# Try to fix filenames so Rails will be willing to display them.
+puts ""
+print "Checking filenames"
+
 files = Dir[Rails.root.join("app/assets/images/photo_library/*")]
+bad_files = []
 
 files.each do |file|
-  Photo.find_or_create_by! path: file
+  begin
+    URI.parse file
+    print "."
+  rescue
+    new_name = file
+      .gsub(" ", "-")
+      .gsub("[", "(").gsub("]", ")")
+      .gsub("{", "(").gsub("}", ")")
+      .gsub("<", "(").gsub(">", ")")
+      .gsub("$", "-")
+      .gsub("^", "-")
+      .gsub("|", "-")
+      .gsub("’", "'")
+      .remove('"')
+      .remove("`")
+
+    bad_files << { old_name: file, new_name: new_name }
+  end
+end
+
+if bad_files.present?
+  bad_files.each do |file|
+    FileUtils.move(file[:old_name], file[:new_name]) unless file[:old_name] == file[:new_name]
+  end
+end
+
+puts ""
+
+
+# Load files, and output any that Rails won't like.
+print "Uploading pictures to database"
+
+files = Dir[Rails.root.join("app/assets/images/photo_library/*")]
+bad_files = []
+accepted_filetypes = %w(.jpg .jpeg .png .gif .tiff .bmp)
+
+files.each do |file|
+  begin
+    raise StandardError unless accepted_filetypes.include? File.extname(file).downcase
+    URI.parse file
+    Photo.find_or_create_by! path: file
+    print "."
+  rescue => error
+    bad_files << file
+  end
+end
+
+puts ""
+
+if bad_files.present?
+  puts "Did not load the following files, because of bad characters in filename or unsupported filetype:"
+  bad_files.each { |file| puts file }
 end
