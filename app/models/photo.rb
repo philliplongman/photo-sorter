@@ -7,6 +7,7 @@
 #  tagged_at  :datetime
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  filename   :text
 #
 # Indexes
 #
@@ -21,11 +22,9 @@ class Photo < ActiveRecord::Base
   validates :path, presence: true
   validates :path, uniqueness: true
 
+  before_create -> (){ self.filename = File.basename(self.path) }
+
   def asset_path
     "photo_library/#{filename}"
-  end
-
-  def filename
-    File.basename(path)
   end
 end
