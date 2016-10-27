@@ -1,6 +1,7 @@
 $sidebar-background: $medium-gray;
 
 .main {
+  background: $dark-gray;
   padding: 0 !important;
   overflow: scroll;
 }
@@ -30,6 +31,7 @@ $sidebar-background: $medium-gray;
   h6 {
     margin-bottom: 20px;
     margin-top: 10px;
+    width: 260px;
   }
 
   input[type="checkbox"] {

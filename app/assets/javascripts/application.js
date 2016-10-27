@@ -26,16 +26,48 @@ $(function(){
     $(e.target).parent("div").toggleClass("hollow");
   });
 
-  $("#photo").click(function(e){
-    var $target = $(e.target);
-    var maxHeight = $target.css("max-height");
-    var maxWidth = $target.css("max-width");
+  function bigPhoto (){
+    var photo = document.getElementById("photo");
+    var photoHeight = photo.naturalHeight;
+    var photoWidth = photo.naturalWidth;
 
-    if (maxHeight != "none" && maxWidth != "none") {
-      $target.css({ "max-width": "none", "max-height": "none" });
+    var $container = $(".photo-container");
+    var containerHeight = $container.height();
+    var containerWidth = $container.width();
+
+    if (photoHeight > containerHeight || photoWidth > containerWidth) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  function photoConstrained (){
+    var css = $("#photo").css(["max-width", "max-height"]);
+
+    if (css["max-height"] != "none" && css["max-width"] != "none") {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+
+  $(".photo-container").click(function(e){
+    var $photo = $(e.target);
+    var $container = $photo.parent();
+
+    if ( bigPhoto() && photoConstrained() ) {
+      $photo.css({ "max-width": "none", "max-height": "none" });
+      $container.css({ "display": "block" })
     } else {
       var windowHeight = $(window).height();
-      $target.css({ "max-width": "100%", "max-height": windowHeight });
+      $photo.css({ "max-width": "100%", "max-height": windowHeight });
+      $container.css({
+        "display": "flex",
+        "justify-content": "center",
+        "align-items": "center"
+      })
     }
   });
 
