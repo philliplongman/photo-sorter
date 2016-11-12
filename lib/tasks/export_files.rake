@@ -30,7 +30,7 @@ class Exporter
   end
 
   def export_photo(photo)
-    export_dir = FileUtils.mkpath File.join(tagged_photos_dir, photo_tags photo)
+    export_dir = FileUtils.mkpath File.join( tagged_photos_dir, photo_tags(photo) )
     FileUtils.copy photo.path, File.join(export_dir, photo.filename)
     print "."
   end

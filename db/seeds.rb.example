@@ -51,7 +51,8 @@ if bad_files.present?
 end
 
 puts ""
-
+puts "#{Photo.count} photos in database."
+puts ""
 
 # Load files, and output any that Rails won't like.
 print "Uploading pictures to database"
