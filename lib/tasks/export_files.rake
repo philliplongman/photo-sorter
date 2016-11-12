@@ -1,33 +1,68 @@
-desc "Copy photos into folders by tags"
-task export_files: :environment do
+class Exporter
 
-  puts "Removing other tags from deleted and misfiled photos."
+  def clean_tags(*tag_names)
+    puts "Removing other tags from photos tagged #{tag_names.to_sentence}."
+    tag_names.each { |e| clean_tag e }
+  end
 
-  delete_tag   = Tag.find_by_name "delete"
-  misfiled_tag = Tag.find_by_name "misfiled"
-  Photo.tagged("delete").each   { |photo| photo.update tags: [delete_tag]   }
-  Photo.tagged("misfiled").each { |photo| photo.update tags: [misfiled_tag] }
+  def export_by_tag
+    puts "Exporting photos by tag."
+    Photo.find_each { |e| export_photo e }
+    puts ""
+  end
 
-  puts "Exporting photos by tag."
+  def confirm_tally
+    if exported_files.count == Photo.count
+      puts "Everything looks good!"
+    else
+      puts "Count doesn't match. " +
+           "#{exported_files.count} files exported. " +
+           "#{Photo.count} files in database."
+    end
+  end
 
-  batch_export_path = File.join(Dir.home, "Desktop", "Tagged Photos")
+  private
 
-  Photo.all.each do |photo|
-    tags = photo.tags.order(:name).map(&:name).join(", ")
-    export_dir = File.join(batch_export_path, tags)
-    FileUtils.makedirs export_dir
+  def clean_tag(tag_name)
+    tag_name = tag_name.to_s.humanize.downcase
+    tag = Tag.find_by_name(tag_name)
+    Photo.tagged(tag_name).each { |e| e.update(tags: [tag]) }
+  end
 
-    export_path = File.join(export_dir, photo.filename)
-    FileUtils.copy photo.path, export_path
+  def export_photo(photo)
+    export_dir = FileUtils.mkpath File.join(tagged_photos_dir, photo_tags photo)
+    FileUtils.copy photo.path, File.join(export_dir, photo.filename)
     print "."
   end
-  puts ""
 
-  exported_files = Dir[File.join(batch_export_path, "**", "*")].select { |f| File.file? f }
-
-  if exported_files.count == Photo.count
-    puts "Everything looks good!"
-  else
-    puts "Count doesn't match. #{exported_files.count} files exported. #{Photo.count} files in database."
+  def photo_tags(photo)
+    if photo.tags.present?
+      photo.tags.map(&:name).sort.join(", ")
+    else
+      "untagged"
+    end
   end
+
+  def tagged_photos_dir
+    @tagged_photos_dir ||= FileUtils.mkpath(
+      File.join(Dir.home, "Desktop", "Tagged Photos")
+    )
+  end
+
+  def exported_files
+    @exported_files ||= begin
+      files_and_folders = Dir[File.join(tagged_photos_dir, "**", "*")]
+      files_and_folders.select { |f| File.file? f }
+    end
+  end
+
+end
+
+
+desc "Copy photos into folders by tags"
+task export_files: :environment do
+  exporter = Exporter.new
+  exporter.clean_tags :delete, :misfiled
+  exporter.export_by_tag
+  exporter.confirm_tally
 end
