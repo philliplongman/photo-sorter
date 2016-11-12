@@ -5,6 +5,9 @@
 
 .sidebar.shrink.column
   - if @photo
+    - completed, total = Photo.where.not(tagged_at: nil).count, Photo.count
+    - percent = (completed.to_f / total.to_f * 100).round
+    h6.text-right= "#{completed} / #{total} (#{percent}%)"
     h6= @photo.filename
     
     = simple_form_for @photo do |f|
